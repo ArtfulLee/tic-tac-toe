@@ -3,37 +3,43 @@
 }
 
 body {
+  margin: 0;
+  padding: 0;
   font-family: sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f5f5f5;
 }
 
-h1 {
-  margin-top: 0;
-  font-size: 22px;
-}
-
-h2 {
-  margin-top: 0;
-  font-size: 20px;
-}
-
-h3 {
-  margin-top: 0;
-  font-size: 18px;
-}
-
-h4 {
-  margin-top: 0;
-  font-size: 16px;
-}
-
-h5 {
-  margin-top: 0;
-  font-size: 14px;
-}
-
+h1,
+h2,
+h3,
+h4,
+h5,
 h6 {
   margin-top: 0;
-  font-size: 12px;
+}
+
+/* Размеры заголовков можно оставить как у тебя, но лучше задать в относительных единицах */
+h1 {
+  font-size: clamp(20px, 4vw, 32px);
+}
+h2 {
+  font-size: clamp(18px, 3.5vw, 28px);
+}
+h3 {
+  font-size: clamp(16px, 3vw, 24px);
+}
+h4 {
+  font-size: clamp(14px, 2.5vw, 20px);
+}
+h5 {
+  font-size: clamp(12px, 2vw, 16px);
+}
+h6 {
+  font-size: clamp(10px, 1.8vw, 14px);
 }
 
 code {
@@ -44,35 +50,66 @@ ul {
   padding-inline-start: 20px;
 }
 
-.square {
-  background: #fff;
-  border: 1px solid #999;
-  float: left;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-  width: 34px;
-}
-
-.board-row:after {
-  clear: both;
-  content: '';
-  display: table;
-}
-
-.status {
-  margin-bottom: 10px;
-}
 .game {
   display: flex;
   flex-direction: row;
+  gap: 24px;
+  width: 100%;
+  max-width: 900px; /* чтобы на больших экранах не было слишком растянуто */
+  padding: 16px;
+}
+
+.game-board {
+  /* это обёртка вокруг всех рядов — добавь класс в JSX */
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* вертикальный отступ между рядами */
+}
+
+.board-row {
+  display: flex; /* вместо float — современный способ */
+  gap: 4px; /* отступы между клетками вместо хитрых margin */
+}
+
+.square {
+  background: #fff;
+  border: 1px solid #999;
+  font-size: clamp(18px, 5vw, 36px); /* адаптивный размер шрифта */
+  font-weight: bold;
+  line-height: 1;
+  height: clamp(50px, 12vw, 80px); /* высота клетки адаптивная */
+  width: clamp(50px, 12vw, 80px); /* ширина тоже адаптивная */
+  margin: 0; /* убираем отрицательные отступы */
+  padding: 0;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status {
+  margin-bottom: 16px;
+  font-size: clamp(14px, 3vw, 20px);
 }
 
 .game-info {
-  margin-left: 20px;
+  min-width: 220px; /* чтобы боковая панель не схлопывалась на мобильных */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Убираем float-хаки — .board-row:after больше не нужен */
+
+@media (max-width: 600px) {
+  .game {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .board-row {
+    width: 100%;
+    justify-content: center;
+  }
 }
